@@ -55,3 +55,52 @@ li {
     padding: 5px 10px;
     font-size: 12px;
 }
+
+/* ... (Gunakan CSS sebelumnya, lalu tambahkan ini) ... */
+
+.filter-group {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.filter-group button {
+    padding: 5px 12px;
+    font-size: 12px;
+    background-color: #ecf0f1;
+    color: #333;
+}
+
+.filter-group button:focus {
+    background-color: #e67e22;
+    color: white;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.category-tag {
+    font-size: 10px;
+    background: #e67e22;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    width: fit-content;
+    margin-bottom: 5px;
+}
+
+.maps-link {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
