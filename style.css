@@ -56,8 +56,6 @@ li {
     font-size: 12px;
 }
 
-/* ... (Gunakan CSS sebelumnya, lalu tambahkan ini) ... */
-
 .filter-group {
     display: flex;
     gap: 5px;
@@ -104,3 +102,22 @@ select {
     border-radius: 8px;
     border: 1px solid #ddd;
 }
+
+.row { display: flex; gap: 10px; }
+.row select { flex: 1; }
+
+.filter-section p { font-size: 12px; margin: 10px 0 5px; font-weight: bold; color: #666; }
+
+.price-tag {
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 5px;
+}
+
+.price-h { background: #ffeaa7; color: #d35400; border: 1px solid #fab1a0; }
+.price-l { background: #dff9fb; color: #0984e3; border: 1px solid #81ecec; }
+
+.btn-h:hover { background: #fab1a0 !important; }
+.btn-l:hover { background: #81ecec !important; }
