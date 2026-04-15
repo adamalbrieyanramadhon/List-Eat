@@ -121,3 +121,35 @@ select {
 
 .btn-h:hover { background: #fab1a0 !important; }
 .btn-l:hover { background: #81ecec !important; }
+}
+
+.filter-group.scrollable {
+    display: flex;
+    overflow-x: auto; /* Agar bisa digeser ke samping jika kategori banyak */
+    padding-bottom: 5px;
+    gap: 8px;
+    justify-content: flex-start;
+}
+
+.filter-group.scrollable::-webkit-scrollbar {
+    height: 4px;
+}
+
+.filter-group.scrollable::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.category-tag {
+    font-size: 10px;
+    background: #636e72; /* Warna netral untuk kategori */
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    width: fit-content;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+/* Warna khusus untuk Coffee Shop agar beda */
+.category-tag-coffee { background: #6f4e37; }
