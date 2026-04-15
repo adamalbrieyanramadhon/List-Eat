@@ -10,23 +10,29 @@
     <div class="container">
         <header>
             <h1>🍴 Wishlist Kulinerku</h1>
-            <p>Daftar tempat makan yang wajib dicoba!</p>
         </header>
 
         <section class="input-section">
             <input type="text" id="restoName" placeholder="Nama Restoran...">
-            <input type="text" id="restoLocation" placeholder="Lokasi (contoh: Jakarta Selatan)">
+            <select id="restoCategory">
+                <option value="Semua">-- Pilih Kategori --</option>
+                <option value="Seafood">Seafood</option>
+                <option value="Ayam">Ayam</option>
+                <option value="Daging">Daging/Steak</option>
+                <option value="Kopi">Kopi/Cafe</option>
+            </select>
+            <input type="text" id="restoMaps" placeholder="Link Google Maps (Optional)">
             <button onclick="addResto()">Tambah ke List</button>
         </section>
 
+        <div class="filter-group">
+            <button onclick="filterResto('Semua')">Semua</button>
+            <button onclick="filterResto('Seafood')">Seafood</button>
+            <button onclick="filterResto('Ayam')">Ayam</button>
+        </div>
+
         <ul id="wishlist">
-            <li>
-                <div>
-                    <strong>Sate Khas Senayan</strong> — Jakarta
-                </div>
-                <button class="delete-btn" onclick="this.parentElement.remove()">Hapus</button>
-            </li>
-        </ul>
+            </ul>
     </div>
 
     <script src="script.js"></script>
