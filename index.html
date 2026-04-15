@@ -14,25 +14,41 @@
 
         <section class="input-section">
             <input type="text" id="restoName" placeholder="Nama Restoran...">
-            <select id="restoCategory">
-                <option value="Semua">-- Pilih Kategori --</option>
-                <option value="Seafood">Seafood</option>
-                <option value="Ayam">Ayam</option>
-                <option value="Daging">Daging/Steak</option>
-                <option value="Kopi">Kopi/Cafe</option>
-            </select>
-            <input type="text" id="restoMaps" placeholder="Link Google Maps (Optional)">
-            <button onclick="addResto()">Tambah ke List</button>
+            
+            <div class="row">
+                <select id="restoCategory">
+                    <option value="">-- Pilih Kategori --</option>
+                    <option value="Seafood">Seafood</option>
+                    <option value="Ayam">Ayam</option>
+                    <option value="Daging">Daging</option>
+                </select>
+
+                <select id="restoPrice">
+                    <option value="L">L (Low/Murah)</option>
+                    <option value="H">H (High/Mahal)</option>
+                </select>
+            </div>
+
+            <input type="text" id="restoMaps" placeholder="Link Google Maps">
+            <button id="addBtn">Tambah ke List</button>
         </section>
 
-        <div class="filter-group">
-            <button onclick="filterResto('Semua')">Semua</button>
-            <button onclick="filterResto('Seafood')">Seafood</button>
-            <button onclick="filterResto('Ayam')">Ayam</button>
+        <div class="filter-section">
+            <p>Filter Kategori:</p>
+            <div class="filter-group" id="catFilters">
+                <button onclick="filterData('all', 'category')">Semua</button>
+                <button onclick="filterData('Seafood', 'category')">Seafood</button>
+                <button onclick="filterData('Ayam', 'category')">Ayam</button>
+            </div>
+            
+            <p>Filter Harga:</p>
+            <div class="filter-group">
+                <button class="btn-h" onclick="filterData('H', 'price')">💰 High (H)</button>
+                <button class="btn-l" onclick="filterData('L', 'price')">💸 Low (L)</button>
+            </div>
         </div>
 
-        <ul id="wishlist">
-            </ul>
+        <ul id="wishlist"></ul>
     </div>
 
     <script src="script.js"></script>
