@@ -3,60 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tempat Mam - Daftar Wishlist</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Tempat Mam - Aesthetic Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-content">
-            <h3>Tambah Wishlist Baru</h3>
+            <h3>New Entry</h3>
             <button class="close-modal" onclick="toggleModal()">&times;</button>
             <div class="input-form">
                 <input type="text" id="restoName" placeholder="Nama Tempat...">
                 <div class="row">
                     <select id="restoCategory">
-                        <option value="">-- Kategori --</option>
+                        <option value="">Kategori</option>
                         <option value="Sushi">Sushi</option>
                         <option value="Coffee Shop">Coffee Shop</option>
                         <option value="Daging">Daging</option>
                         <option value="Cake/Desrt">Cake/Desrt</option>
                     </select>
                     <select id="restoPrice">
-                        <option value="L">Murah (L)</option>
-                        <option value="H">Mahal (H)</option>
+                        <option value="L">L</option>
+                        <option value="H">H</option>
                     </select>
                 </div>
                 <input type="text" id="restoMaps" placeholder="Link Google Maps">
-                <button id="addBtn">Tambahkan ke Menu</button>
+                <button id="addBtn">Simpan ke Wishlist</button>
             </div>
         </div>
     </div>
 
-    <div class="menu-container">
-        <header class="menu-header">
-            <h1 class="brand-title">Tempat Mam</h1>
-            <p class="brand-subtitle">Daftar Rasa yang Ingin Dicoba</p>
+    <div class="main-wrapper">
+        <header class="header">
+            <h1 class="title">Tempat Mam</h1>
+            <div class="divider"></div>
         </header>
 
-        <nav class="filter-nav">
-            <div class="filter-scroll">
-                <button onclick="filterData('all')" class="active">Semua</button>
-                <button onclick="filterData('Sushi')">Sushi</button>
-                <button onclick="filterData('Coffee Shop')">Coffee</button>
-                <button onclick="filterData('Daging')">Daging</button>
-                <button onclick="filterData('Cake/Desrt')">Dessert</button>
-                <button onclick="filterData('H')">Mahal (H)</button>
-                <button onclick="filterData('L')">Murah (L)</button>
+        <nav class="nav-filters">
+            <div class="filter-row">
+                <button onclick="filterData('all')" class="btn-filter active">All</button>
+                <button onclick="filterData('Sushi')" class="btn-filter">Sushi</button>
+                <button onclick="filterData('Coffee Shop')" class="btn-filter">Coffee</button>
+                <button onclick="filterData('Daging')" class="btn-filter">Daging</button>
+                <button onclick="filterData('Cake/Desrt')" class="btn-filter">Cake</button>
+            </div>
+            <div class="price-filters">
+                <button onclick="filterData('H')" class="btn-price">H</button>
+                <button onclick="filterData('L')" class="btn-price">L</button>
             </div>
         </nav>
 
-        <div id="wishlist" class="menu-grid">
+        <div id="wishlist" class="grid-container">
             </div>
     </div>
 
-    <button class="fab-add" onclick="toggleModal()">+</button>
+    <button class="add-button" onclick="toggleModal()">
+        <span>+</span>
+    </button>
 
     <script src="script.js"></script>
 </body>
