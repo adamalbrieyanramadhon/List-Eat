@@ -1,13 +1,9 @@
-// Mengambil data dari LocalStorage agar data tersimpan permanen di browser
 let allRestos = JSON.parse(localStorage.getItem('myRestoList')) || [];
-
-const addBtn = document.getElementById('addBtn');
 const wishlistElement = document.getElementById('wishlist');
 
-// Jalankan fungsi tampilkan data pertama kali
 renderList(allRestos);
 
-addBtn.addEventListener('click', function() {
+document.getElementById('addBtn').addEventListener('click', function() {
     const name = document.getElementById('restoName').value;
     const category = document.getElementById('restoCategory').value;
     const price = document.getElementById('restoPrice').value;
@@ -18,20 +14,13 @@ addBtn.addEventListener('click', function() {
         return;
     }
 
-    const newResto = {
-        id: Date.now(),
-        name,
-        category,
-        price,
-        maps
-    };
-
+    const newResto = { id: Date.now(), name, category, price, maps };
     allRestos.push(newResto);
     saveAndRender();
 
-    // Reset Form
     document.getElementById('restoName').value = '';
     document.getElementById('restoMaps').value = '';
+    document.getElementById('restoCategory').value = '';
 });
 
 function saveAndRender() {
@@ -41,15 +30,17 @@ function saveAndRender() {
 
 function renderList(data) {
     wishlistElement.innerHTML = '';
-
     data.forEach(resto => {
         const li = document.createElement('li');
         const priceClass = resto.price === 'H' ? 'price-h' : 'price-l';
         
+        // Cek jika kategori adalah Coffee Shop untuk warna tag khusus
+        const coffeeClass = resto.category === 'Coffee Shop' ? 'category-tag-coffee' : '';
+        
         li.innerHTML = `
             <div class="item-info">
                 <div>
-                    <span class="category-tag">${resto.category}</span>
+                    <span class="category-tag ${coffeeClass}">${resto.category}</span>
                     <span class="price-tag ${priceClass}">${resto.price}</span>
                 </div>
                 <strong>${resto.name}</strong>
@@ -61,7 +52,6 @@ function renderList(data) {
     });
 }
 
-// Fungsi Filter Gabungan (Kategori & Harga)
 function filterData(value, type) {
     if (value === 'all') {
         renderList(allRestos);
@@ -74,6 +64,8 @@ function filterData(value, type) {
 }
 
 function removeResto(id) {
-    allRestos = allRestos.filter(r => r.id !== id);
-    saveAndRender();
+    if(confirm("Hapus dari daftar?")) {
+        allRestos = allRestos.filter(r => r.id !== id);
+        saveAndRender();
+    }
 }
