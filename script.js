@@ -1,99 +1,103 @@
-// Load data dari localstorage
-let allRestos = JSON.parse(localStorage.getItem('myRestoMenu')) || [];
+// Nama storage harus unik agar tidak bentrok dengan versi sebelumnya
+const STORAGE_KEY = 'aesthetic_mam_v3';
+let allRestos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 const wishlistElement = document.getElementById('wishlist');
-const modalOverlay = document.getElementById('modalOverlay');
 
-// Render data saat pertama dibuka
+// Inisialisasi tampilan
 renderList(allRestos);
 
-// Fungsi untuk buka/tutup Modal Input
+// Fungsi Buka/Tutup Modal
 function toggleModal() {
-    modalOverlay.classList.toggle('show');
+    const modal = document.getElementById('modalOverlay');
+    modal.classList.toggle('show');
 }
 
-// Menangani Klik tombol Tambah di dalam Modal
+// Fungsi Tambah Data
 document.getElementById('addBtn').addEventListener('click', function() {
-    const name = document.getElementById('restoName').value;
-    const category = document.getElementById('restoCategory').value;
-    const price = document.getElementById('restoPrice').value;
-    const maps = document.getElementById('restoMaps').value;
+    const nameInput = document.getElementById('restoName');
+    const categoryInput = document.getElementById('restoCategory');
+    const priceInput = document.getElementById('restoPrice');
+    const mapsInput = document.getElementById('restoMaps');
 
-    if (name === '' || category === '') {
-        alert("Nama dan Kategori harus diisi menu utama!");
+    if (!nameInput.value || !categoryInput.value) {
+        alert("Nama dan Kategori harus diisi.");
         return;
     }
 
-    const newResto = { id: Date.now(), name, category, price, maps };
-    allRestos.push(newResto);
-    saveAndRender();
+    const newEntry = {
+        id: Date.now(),
+        name: nameInput.value,
+        category: categoryInput.value,
+        price: priceInput.value,
+        maps: mapsInput.value
+    };
 
-    // Reset dan Tutup Modal
-    document.getElementById('restoName').value = '';
-    document.getElementById('restoMaps').value = '';
+    allRestos.push(newEntry);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allRestos));
+    
+    renderList(allRestos);
+    
+    // Reset form
+    nameInput.value = '';
+    mapsInput.value = '';
+    categoryInput.value = '';
+    
     toggleModal();
 });
 
-function saveAndRender() {
-    localStorage.setItem('myRestoMenu', JSON.stringify(allRestos));
-    renderList(allRestos);
-}
-
-// Menampilkan data dengan gaya "Menu Card"
+// Fungsi Render Kartu
 function renderList(data) {
     wishlistElement.innerHTML = '';
     
     if(data.length === 0) {
-        wishlistElement.innerHTML = `<p style="text-align:center; grid-column: 1/-1; color: #999; padding: 20px;">Menu wishlist masih kosong. Tekan + untuk menambah.</p>`;
+        wishlistElement.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#ccc; padding: 50px; font-style: italic;">List masih kosong...</p>`;
         return;
     }
 
-    data.forEach(resto => {
-        const priceClass = resto.price === 'H' ? 'price-h' : 'price-l';
-        
-        const cardHtml = `
-            <div class="menu-card">
-                <div class="card-main">
-                    <div class="card-header">
-                        <span class="cate-tag">${resto.category}</span>
-                        <div class="price-circle ${priceClass}">${resto.price}</div>
-                    </div>
-                    <h2 class="resto-name">${resto.name}</h2>
+    data.forEach(item => {
+        const card = `
+            <div class="card">
+                <div class="card-top">
+                    <span class="card-cat">${item.category}</span>
+                    <span class="card-price-icon">${item.price}</span>
                 </div>
-                <div class="card-actions">
-                    ${resto.maps ? `<a href="${resto.maps}" target="_blank" class="maps-btn">📍 Lokasi</a>` : '<span></span>'}
-                    <button class="delete-ico" onclick="removeResto(${resto.id})">🗑️</button>
+                <h2 class="card-title">${item.name}</h2>
+                <div class="card-footer">
+                    ${item.maps ? `<a href="${item.maps}" target="_blank" class="link-maps">VIEW MAPS</a>` : '<span></span>'}
+                    <button class="btn-del" onclick="removeEntry(${item.id})">✕</button>
                 </div>
             </div>
         `;
-        wishlistElement.innerHTML += cardHtml;
+        wishlistElement.insertAdjacentHTML('beforeend', card);
     });
 }
 
 // Fungsi Filter
-function filterData(value) {
-    // Atur Tombol Aktif
-    const buttons = document.querySelectorAll('.filter-scroll button');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+function filterData(val) {
+    // Update visual tombol aktif
+    const filterBtns = document.querySelectorAll('.btn-filter');
+    filterBtns.forEach(btn => {
+        if(btn.innerText.toLowerCase() === val.toLowerCase() || (val === 'all' && btn.innerText === 'All')) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
 
-    // Logika Filter
-    if (value === 'all') {
+    if (val === 'all') {
         renderList(allRestos);
-    } else if (value === 'H' || value === 'L') {
-        // Filter berdasarkan harga
-        const filtered = allRestos.filter(item => item.price === value);
-        renderList(filtered);
+    } else if (val === 'H' || val === 'L') {
+        renderList(allRestos.filter(i => i.price === val));
     } else {
-        // Filter berdasarkan kategori
-        const filtered = allRestos.filter(item => item.category === value);
-        renderList(filtered);
+        renderList(allRestos.filter(i => i.category === val));
     }
 }
 
 // Fungsi Hapus
-function removeResto(id) {
-    if(confirm("Hapus item menu ini?")) {
-        allRestos = allRestos.filter(r => r.id !== id);
-        saveAndRender();
+function removeEntry(id) {
+    if(confirm("Hapus item ini dari menu?")) {
+        allRestos = allRestos.filter(i => i.id !== id);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(allRestos));
+        renderList(allRestos);
     }
 }
