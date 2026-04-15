@@ -3,57 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Culinary Wishlist</title>
+    <title>Tempat Mam - Daftar Wishlist</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🍴 Wishlist Kulinerku</h1>
-        </header>
 
-        <section class="input-section">
-            <input type="text" id="restoName" placeholder="Nama Tempat/Resto...">
-            
-            <div class="row">
-                <select id="restoCategory">
-                    <option value="">-- Pilih Kategori --</option>
-                    <option value="Coffee Shop">Coffee Shop</option>
-                    <option value="Seafood">Seafood</option>
-                    <option value="Ayam">Ayam</option>
-                    <option value="Daging">Daging/Steak</option>
-                    <option value="Snack/Dessert">Snack/Dessert</option>
-                </select>
-
-                <select id="restoPrice">
-                    <option value="L">L (Low/Murah)</option>
-                    <option value="H">H (High/Mahal)</option>
-                </select>
-            </div>
-
-            <input type="text" id="restoMaps" placeholder="Link Google Maps">
-            <button id="addBtn">Tambah ke List</button>
-        </section>
-
-        <div class="filter-section">
-            <p>Filter Kategori:</p>
-            <div class="filter-group scrollable">
-                <button onclick="filterData('all', 'category')">Semua</button>
-                <button onclick="filterData('Coffee Shop', 'category')">☕ Coffee</button>
-                <button onclick="filterData('Seafood', 'category')">🐟 Seafood</button>
-                <button onclick="filterData('Ayam', 'category')">🍗 Ayam</button>
-                <button onclick="filterData('Snack/Dessert', 'category')">🍰 Snack</button>
-            </div>
-            
-            <p>Filter Harga:</p>
-            <div class="filter-group">
-                <button class="btn-h" onclick="filterData('H', 'price')">💰 Mahal (H)</button>
-                <button class="btn-l" onclick="filterData('L', 'price')">💸 Murah (L)</button>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <h3>Tambah Wishlist Baru</h3>
+            <button class="close-modal" onclick="toggleModal()">&times;</button>
+            <div class="input-form">
+                <input type="text" id="restoName" placeholder="Nama Tempat...">
+                <div class="row">
+                    <select id="restoCategory">
+                        <option value="">-- Kategori --</option>
+                        <option value="Sushi">Sushi</option>
+                        <option value="Coffee Shop">Coffee Shop</option>
+                        <option value="Daging">Daging</option>
+                        <option value="Cake/Desrt">Cake/Desrt</option>
+                    </select>
+                    <select id="restoPrice">
+                        <option value="L">Murah (L)</option>
+                        <option value="H">Mahal (H)</option>
+                    </select>
+                </div>
+                <input type="text" id="restoMaps" placeholder="Link Google Maps">
+                <button id="addBtn">Tambahkan ke Menu</button>
             </div>
         </div>
-
-        <ul id="wishlist"></ul>
     </div>
+
+    <div class="menu-container">
+        <header class="menu-header">
+            <h1 class="brand-title">Tempat Mam</h1>
+            <p class="brand-subtitle">Daftar Rasa yang Ingin Dicoba</p>
+        </header>
+
+        <nav class="filter-nav">
+            <div class="filter-scroll">
+                <button onclick="filterData('all')" class="active">Semua</button>
+                <button onclick="filterData('Sushi')">Sushi</button>
+                <button onclick="filterData('Coffee Shop')">Coffee</button>
+                <button onclick="filterData('Daging')">Daging</button>
+                <button onclick="filterData('Cake/Desrt')">Dessert</button>
+                <button onclick="filterData('H')">Mahal (H)</button>
+                <button onclick="filterData('L')">Murah (L)</button>
+            </div>
+        </nav>
+
+        <div id="wishlist" class="menu-grid">
+            </div>
+    </div>
+
+    <button class="fab-add" onclick="toggleModal()">+</button>
 
     <script src="script.js"></script>
 </body>
