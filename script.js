@@ -1,70 +1,79 @@
-// Nama storage harus unik agar tidak bentrok dengan versi sebelumnya
-const STORAGE_KEY = 'aesthetic_mam_v3';
+const STORAGE_KEY = 'culinary_wishlist_v4';
 let allRestos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 const wishlistElement = document.getElementById('wishlist');
 
-// Inisialisasi tampilan
 renderList(allRestos);
 
-// Fungsi Buka/Tutup Modal
 function toggleModal() {
-    const modal = document.getElementById('modalOverlay');
-    modal.classList.toggle('show');
+    document.getElementById('modalOverlay').classList.toggle('show');
 }
 
-// Fungsi Tambah Data
 document.getElementById('addBtn').addEventListener('click', function() {
     const nameInput = document.getElementById('restoName');
     const categoryInput = document.getElementById('restoCategory');
-    const priceInput = document.getElementById('restoPrice');
     const mapsInput = document.getElementById('restoMaps');
 
     if (!nameInput.value || !categoryInput.value) {
-        alert("Nama dan Kategori harus diisi.");
+        alert("Nama tempat dan kategori wajib diisi ya!");
         return;
     }
 
-    const newEntry = {
+    const newResto = {
         id: Date.now(),
         name: nameInput.value,
         category: categoryInput.value,
-        price: priceInput.value,
-        maps: mapsInput.value
+        maps: mapsInput.value,
+        visited: false
     };
 
-    allRestos.push(newEntry);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(allRestos));
+    allRestos.push(newResto);
+    saveAndRender();
     
-    renderList(allRestos);
-    
-    // Reset form
+    // Reset & Close
     nameInput.value = '';
     mapsInput.value = '';
     categoryInput.value = '';
-    
     toggleModal();
 });
 
-// Fungsi Render Kartu
+function saveAndRender() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allRestos));
+    renderList(allRestos);
+}
+
+function toggleVisited(id) {
+    const index = allRestos.findIndex(r => r.id === id);
+    if (index !== -1) {
+        allRestos[index].visited = !allRestos[index].visited;
+        saveAndRender();
+    }
+}
+
 function renderList(data) {
     wishlistElement.innerHTML = '';
     
     if(data.length === 0) {
-        wishlistElement.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#ccc; padding: 50px; font-style: italic;">List masih kosong...</p>`;
+        wishlistElement.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#ccc; padding: 50px;">Belum ada tempat mam yang terdaftar.</p>`;
         return;
     }
 
     data.forEach(item => {
+        const isVisited = item.visited ? 'visited' : '';
+        const isChecked = item.visited ? 'checked' : '';
+
         const card = `
-            <div class="card">
+            <div class="card ${isVisited}">
                 <div class="card-top">
                     <span class="card-cat">${item.category}</span>
-                    <span class="card-price-icon">${item.price}</span>
+                    <button class="btn-del" onclick="removeResto(${item.id})">✕</button>
                 </div>
                 <h2 class="card-title">${item.name}</h2>
                 <div class="card-footer">
-                    ${item.maps ? `<a href="${item.maps}" target="_blank" class="link-maps">VIEW MAPS</a>` : '<span></span>'}
-                    <button class="btn-del" onclick="removeEntry(${item.id})">✕</button>
+                    <label class="check-btn">
+                        <input type="checkbox" ${isChecked} onclick="toggleVisited(${item.id})">
+                        ${item.visited ? 'Sudah Pernah ✨' : 'Belum Dicoba'}
+                    </label>
+                    ${item.maps ? `<a href="${item.maps}" target="_blank" class="link-maps">📍 Lokasi</a>` : '<span></span>'}
                 </div>
             </div>
         `;
@@ -72,12 +81,10 @@ function renderList(data) {
     });
 }
 
-// Fungsi Filter
 function filterData(val) {
-    // Update visual tombol aktif
-    const filterBtns = document.querySelectorAll('.btn-filter');
-    filterBtns.forEach(btn => {
-        if(btn.innerText.toLowerCase() === val.toLowerCase() || (val === 'all' && btn.innerText === 'All')) {
+    // Update active class pada tombol
+    document.querySelectorAll('.btn-filter').forEach(btn => {
+        if(btn.innerText.toLowerCase().includes(val.toLowerCase()) || (val === 'all' && btn.innerText === 'Semua')) {
             btn.classList.add('active');
         } else {
             btn.classList.remove('active');
@@ -86,18 +93,14 @@ function filterData(val) {
 
     if (val === 'all') {
         renderList(allRestos);
-    } else if (val === 'H' || val === 'L') {
-        renderList(allRestos.filter(i => i.price === val));
     } else {
         renderList(allRestos.filter(i => i.category === val));
     }
 }
 
-// Fungsi Hapus
-function removeEntry(id) {
-    if(confirm("Hapus item ini dari menu?")) {
+function removeResto(id) {
+    if(confirm("Hapus dari wishlist?")) {
         allRestos = allRestos.filter(i => i.id !== id);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(allRestos));
-        renderList(allRestos);
+        saveAndRender();
     }
 }
