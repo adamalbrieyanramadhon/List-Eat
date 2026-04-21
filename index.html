@@ -3,122 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Menu Kencan</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7f6;
-            padding: 20px;
-            color: #333;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h2 {
-            text-align: center;
-            color: #d63031;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th {
-            background-color: #d63031;
-            color: white;
-            padding: 12px;
-            text-align: left;
-        }
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-        }
-        tr:hover {
-            background-color: #f9f9f9;
-        }
-        .btn-maps {
-            text-decoration: none;
-            background-color: #0984e3;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 12px;
-        }
-        .checkbox-cell {
-            text-align: center;
-            width: 50px;
-        }
-        input[type="checkbox"] {
-            transform: scale(1.3);
-            cursor: pointer;
-        }
-        /* Style saat dicentang */
-        tr:has(input:checked) td {
-            text-decoration: line-through;
-            color: #b2bec3;
-        }
-    </style>
+    <title>Tempat Mam - Themed Wishlist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-    <h2>Daftar Kuliner Favorit</h2>
-    
-    <table>
-        <thead>
-            <tr>
-                <th class="checkbox-cell">Done</th>
-                <th>Kategori/Nama</th>
-                <th>Catatan Menu</th>
-                <th>Lokasi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="checkbox-cell"><input type="checkbox"></td>
-                <td><strong>Thailand</strong></td>
-                <td>Tom Yum, Mango Sticky Rice</td>
-                <td><a href="#" class="btn-maps" target="_blank">Buka Maps</a></td>
-            </tr>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <h3>Tambah Wishlist Makan</h3>
+            <button class="close-modal" onclick="toggleModal()">&times;</button>
+            <div class="input-form">
+                <input type="text" id="restoName" placeholder="Nama Restoran/Tempat...">
+                
+                <div class="row">
+                    <select id="restoCategory">
+                        <option value="">Pilih Kategori</option>
+                        <option value="Sushi">Sushi</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Street Food">Street Food</option>
+                        <option value="Daging/Meat">Daging/Meat</option>
+                        <option value="Coffee Shop">Coffee Shop</option>
+                    </select>
 
-            <tr>
-                <td class="checkbox-cell"><input type="checkbox"></td>
-                <td><strong>Sushi</strong></td>
-                <td>Salmon Mentai, Sashimi</td>
-                <td><a href="#" class="btn-maps" target="_blank">Buka Maps</a></td>
-            </tr>
+                    <select id="restoPrice">
+                        <option value="L">Murah (L)</option>
+                        <option value="H">Mahal (H)</option>
+                    </select>
+                </div>
 
-            <tr>
-                <td class="checkbox-cell"><input type="checkbox"></td>
-                <td><strong>Daging / Meat</strong></td>
-                <td>Steak, Grill BBQ</td>
-                <td><a href="#" class="btn-maps" target="_blank">Buka Maps</a></td>
-            </tr>
+                <input type="text" id="restoMaps" placeholder="Link Google Maps (Opsional)">
+                <button id="addBtn">Simpan ke List</button>
+            </div>
+        </div>
+    </div>
 
-            <tr>
-                <td class="checkbox-cell"><input type="checkbox"></td>
-                <td><strong>Coffee Shop</strong></td>
-                <td>Es Kopi Susu (Less Sugar)</td>
-                <td><a href="#" class="btn-maps" target="_blank">Buka Maps</a></td>
-            </tr>
+    <div class="main-wrapper">
+        <header class="header">
+            <h1 class="title">Tempat Mam</h1>
+            <div class="divider"></div>
+        </header>
 
-            <tr>
-                <td class="checkbox-cell"><input type="checkbox"></td>
-                <td><strong>Dessert / Jajanan</strong></td>
-                <td>Gelato, Martabak Manis</td>
-                <td><a href="#" class="btn-maps" target="_blank">Buka Maps</a></td>
-            </tr>
+        <nav class="nav-filters">
+            <div class="filter-row">
+                <button onclick="filterData('all')" class="btn-filter active">Semua</button>
+                <button onclick="filterData('Sushi')" class="btn-filter">Sushi</button>
+                <button onclick="filterData('Thailand')" class="btn-filter">Thailand</button>
+                <button onclick="filterData('Street Food')" class="btn-filter">Street Food</button>
+                <button onclick="filterData('Daging/Meat')" class="btn-filter">Daging</button>
+                <button onclick="filterData('Coffee Shop')" class="btn-filter">Coffee</button>
+            </div>
+            
+            <div class="price-filters">
+                <button onclick="filterData('H')" class="btn-price">H</button>
+                <button onclick="filterData('L')" class="btn-price">L</button>
+            </div>
+        </nav>
 
-            </tbody>
-    </table>
-</div>
+        <div id="wishlist" class="grid-container">
+            </div>
+    </div>
 
+    <button class="add-button" onclick="toggleModal()">
+        <span>+</span>
+    </button>
+
+    <script src="script.js"></script>
 </body>
 </html>
