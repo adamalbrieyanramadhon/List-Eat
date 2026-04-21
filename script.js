@@ -32,7 +32,7 @@ document.getElementById('addBtn').addEventListener('click', function() {
         id: Date.now(),
         name: nameInput.value,
         category: categoryInput.value,
-        price: priceInput.value,
+        price: priceInput.value || 'L', // Default ke L jika kosong
         maps: mapsInput.value,
         visited: false
     };
@@ -44,6 +44,7 @@ document.getElementById('addBtn').addEventListener('click', function() {
     nameInput.value = '';
     mapsInput.value = '';
     categoryInput.value = '';
+    priceInput.value = 'L';
     toggleModal();
 });
 
@@ -64,16 +65,18 @@ function renderList(data) {
     wishlistElement.innerHTML = '';
     
     if(data.length === 0) {
-        wishlistElement.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#ccc; padding: 50px;">Belum ada tempat mam yang terdaftar.</p>`;
+        wishlistElement.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#ccc; padding: 50px;">Belum ada tempat mam di kategori ini.</p>`;
         return;
     }
 
     data.forEach(item => {
         const isVisited = item.visited ? 'visited' : '';
         const isChecked = item.visited ? 'checked' : '';
-        const priceClass = item.price === 'H' ? 'price-h' : 'price-l';
         
-        // Mengambil tema berdasarkan kategori, jika tidak ada pakai default
+        // Pencegahan eror untuk data yang belum punya atribut harga
+        const itemPrice = item.price || 'L'; 
+        const priceClass = itemPrice === 'H' ? 'price-h' : 'price-l';
+        
         const themeClass = themeMap[item.category] || 'theme-default';
 
         const card = `
@@ -81,7 +84,7 @@ function renderList(data) {
                 <div class="card-top">
                     <span class="card-cat">${item.category}</span>
                     <div class="top-right">
-                        <span class="price-badge ${priceClass}">${item.price}</span>
+                        <span class="price-badge ${priceClass}">${itemPrice}</span>
                         <button class="btn-del" onclick="removeResto(${item.id})">✕</button>
                     </div>
                 </div>
@@ -100,20 +103,35 @@ function renderList(data) {
 }
 
 function filterData(val) {
-    // Update active class untuk tombol kategori
+    // 1. Reset & Update visual tombol kategori utama
     document.querySelectorAll('.btn-filter').forEach(btn => {
-        if(btn.innerText.toLowerCase().includes(val.toLowerCase()) || (val === 'all' && btn.innerText === 'Semua')) {
+        // Mengecek nilai onclick secara spesifik agar tidak salah baca huruf
+        if (val !== 'H' && val !== 'L' && btn.getAttribute('onclick').includes(`'${val}'`)) {
             btn.classList.add('active');
         } else {
             btn.classList.remove('active');
         }
     });
 
-    // Logika Filter (Kategori vs Harga)
+    // 2. Reset & Update visual tombol harga (H/L)
+    document.querySelectorAll('.btn-price').forEach(btn => {
+        if ((val === 'H' || val === 'L') && btn.innerText === val) {
+            btn.style.backgroundColor = '#2d3436';
+            btn.style.color = 'white';
+            btn.style.borderColor = '#2d3436';
+        } else {
+            btn.style.backgroundColor = 'white';
+            btn.style.color = '#666';
+            btn.style.borderColor = '#ddd';
+        }
+    });
+
+    // 3. Logika Filter Data
     if (val === 'all') {
         renderList(allRestos);
     } else if (val === 'H' || val === 'L') {
-        renderList(allRestos.filter(i => i.price === val));
+        // Memfilter data yang harganya sesuai (atau fallback ke L jika kosong)
+        renderList(allRestos.filter(i => (i.price || 'L') === val));
     } else {
         renderList(allRestos.filter(i => i.category === val));
     }
