@@ -3,82 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wishlist Kuliner Kita</title>
+    <title>Daftar Kuliner Favorit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #ff4757;
+            --bg-color: #f1f2f6;
+            --card-bg: #ffffff;
+        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f9f9f9;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
-            padding: 20px;
         }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        .menu-container {
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 25px;
         }
         h2 {
             text-align: center;
-            color: #ff4757;
+            color: #2f3542;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
         }
-        .list-item {
+        .menu-item {
+            background: #fff;
+            border: 1px solid #e1e1e1;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s;
+        }
+        .menu-header {
             display: flex;
             align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            transition: background 0.3s;
+            justify-content: space-between;
         }
-        .list-item:last-child {
-            border-bottom: none;
+        .category-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        input[type="checkbox"] {
-            margin-right: 15px;
-            transform: scale(1.2);
-            accent-color: #ff4757;
-        }
-        label {
-            font-size: 16px;
-            color: #333;
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
             cursor: pointer;
-            flex-grow: 1;
+            accent-color: var(--primary-color);
         }
-        input[type="checkbox"]:checked + label {
+        .category-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #2f3542;
+        }
+        .place-name {
+            font-size: 0.9rem;
+            color: #747d8c;
+            margin-top: 5px;
+            display: block;
+        }
+        .maps-link {
+            margin-top: 10px;
+            text-decoration: none;
+            color: white;
+            background: var(--primary-color);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            width: fit-content;
+        }
+        .maps-link:hover {
+            opacity: 0.9;
+        }
+        /* Style saat sudah dikunjungi */
+        input:checked ~ .category-name {
             text-decoration: line-through;
-            color: #888;
-        }
-        .category {
-            font-size: 12px;
-            background: #ffeaa7;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-left: 10px;
+            color: #a4b0be;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Having Fun Together!</h2>
-    
-    <div class="list-item">
-        <input type="checkbox" id="item1">
-        <label for="item1">Restoran Steak Viral <span class="category">Hiburan</span></label>
+<div class="menu-container">
+    <h2>Our Food Wishlist</h2>
+
+    <div class="menu-item">
+        <div class="menu-header">
+            <div class="category-info">
+                <input type="checkbox" class="checkbox-custom">
+                <span class="category-name">Thailand Food</span>
+            </div>
+        </div>
+        <span class="place-name">Rekomendasi: Tom Yum & Mango Sticky Rice</span>
+        <a href="https://www.google.com/maps/search/Thailand+Food+Near+Me" target="_blank" class="maps-link">
+            <i class="fas fa-map-marker-alt"></i> Lihat di Maps
+        </a>
     </div>
 
-    <div class="list-item">
-        <input type="checkbox" id="item2">
-        <label for="item2">Kedai Kopi Santai <span class="category">PlayGround</span></label>
+    <div class="menu-item">
+        <div class="menu-header">
+            <div class="category-info">
+                <input type="checkbox" class="checkbox-custom">
+                <span class="category-name">Sushi</span>
+            </div>
+        </div>
+        <span class="place-name">Rekomendasi: Salmon Mentai Roll</span>
+        <a href="https://www.google.com/maps/search/Sushi+Restaurant" target="_blank" class="maps-link">
+            <i class="fas fa-map-marker-alt"></i> Lihat di Maps
+        </a>
     </div>
 
-    <div class="list-item">
-        <input type="checkbox" id="item3">
-        <label for="item3">Warung Makan Tepi Pantai <span class="category">Pantai</span></label>
+    <div class="menu-item">
+        <div class="menu-header">
+            <div class="category-info">
+                <input type="checkbox" class="checkbox-custom">
+                <span class="category-name">Daging / Meat</span>
+            </div>
+        </div>
+        <span class="place-name">Rekomendasi: Grill & Steak House</span>
+        <a href="https://www.google.com/maps/search/Steak+House" target="_blank" class="maps-link">
+            <i class="fas fa-map-marker-alt"></i> Lihat di Maps
+        </a>
     </div>
 
+    <div class="menu-item">
+        <div class="menu-header">
+            <div class="category-info">
+                <input type="checkbox" class="checkbox-custom">
+                <span class="category-name">Coffee Shop</span>
+            </div>
+        </div>
+        <span class="place-name">Rekomendasi: Kopi Susu Aren (Less Sugar)</span>
+        <a href="https://www.google.com/maps/search/Coffee+Shop+Terdekat" target="_blank" class="maps-link">
+            <i class="fas fa-map-marker-alt"></i> Lihat di Maps
+        </a>
     </div>
+
+    <div class="menu-item">
+        <div class="menu-header">
+            <div class="category-info">
+                <input type="checkbox" class="checkbox-custom">
+                <span class="category-name">Dessert / Jajanan</span>
+            </div>
+        </div>
+        <span class="place-name">Rekomendasi: Gelato atau Martabak</span>
+        <a href="https://www.google.com/maps/search/Dessert+Near+Me" target="_blank" class="maps-link">
+            <i class="fas fa-map-marker-alt"></i> Lihat di Maps
+        </a>
+    </div>
+
+</div>
 
 </body>
 </html>
