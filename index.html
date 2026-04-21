@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist Kuliner Kita</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #ff4757;
+        }
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s;
+        }
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        input[type="checkbox"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+            accent-color: #ff4757;
+        }
+        label {
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+        input[type="checkbox"]:checked + label {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .category {
+            font-size: 12px;
+            background: #ffeaa7;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Having Fun Together!</h2>
+    
+    <div class="list-item">
+        <input type="checkbox" id="item1">
+        <label for="item1">Restoran Steak Viral <span class="category">Hiburan</span></label>
+    </div>
+
+    <div class="list-item">
+        <input type="checkbox" id="item2">
+        <label for="item2">Kedai Kopi Santai <span class="category">PlayGround</span></label>
+    </div>
+
+    <div class="list-item">
+        <input type="checkbox" id="item3">
+        <label for="item3">Warung Makan Tepi Pantai <span class="category">Pantai</span></label>
+    </div>
+
+    </div>
+
+</body>
+</html>
