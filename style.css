@@ -99,7 +99,7 @@ body {
     color: var(--primary);
 }
 
-/* TEMA KATEGORI (Dynamic Styling) */
+/* TEMA KATEGORI */
 .theme-sushi { --theme-color: #fd79a8; --theme-bg: #fff0f5; }
 .theme-thailand { --theme-color: #00b894; --theme-bg: #e8f8f5; }
 .theme-street { --theme-color: #f39c12; --theme-bg: #fdfae6; }
