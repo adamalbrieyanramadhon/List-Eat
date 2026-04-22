@@ -32,7 +32,7 @@ document.getElementById('addBtn').addEventListener('click', function() {
         id: Date.now(),
         name: nameInput.value,
         category: categoryInput.value,
-        price: priceInput.value || 'L', // Default ke L jika kosong
+        price: priceInput.value || 'L', 
         maps: mapsInput.value,
         visited: false
     };
@@ -65,18 +65,15 @@ function renderList(data) {
     wishlistElement.innerHTML = '';
     
     if(data.length === 0) {
-        wishlistElement.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#ccc; padding: 50px;">Belum ada tempat mam di kategori ini.</p>`;
+        wishlistElement.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#ccc; padding: 50px;">Belum ada tempat mam di list ini.</p>`;
         return;
     }
 
     data.forEach(item => {
         const isVisited = item.visited ? 'visited' : '';
         const isChecked = item.visited ? 'checked' : '';
-        
-        // Pencegahan eror untuk data yang belum punya atribut harga
         const itemPrice = item.price || 'L'; 
         const priceClass = itemPrice === 'H' ? 'price-h' : 'price-l';
-        
         const themeClass = themeMap[item.category] || 'theme-default';
 
         const card = `
@@ -103,9 +100,8 @@ function renderList(data) {
 }
 
 function filterData(val) {
-    // 1. Reset & Update visual tombol kategori utama
+    // 1. Tombol Filter Kategori
     document.querySelectorAll('.btn-filter').forEach(btn => {
-        // Mengecek nilai onclick secara spesifik agar tidak salah baca huruf
         if (val !== 'H' && val !== 'L' && btn.getAttribute('onclick').includes(`'${val}'`)) {
             btn.classList.add('active');
         } else {
@@ -113,7 +109,7 @@ function filterData(val) {
         }
     });
 
-    // 2. Reset & Update visual tombol harga (H/L)
+    // 2. Tombol Filter Harga
     document.querySelectorAll('.btn-price').forEach(btn => {
         if ((val === 'H' || val === 'L') && btn.innerText === val) {
             btn.style.backgroundColor = '#2d3436';
@@ -126,11 +122,10 @@ function filterData(val) {
         }
     });
 
-    // 3. Logika Filter Data
+    // 3. Logika Filter Tampilan
     if (val === 'all') {
         renderList(allRestos);
     } else if (val === 'H' || val === 'L') {
-        // Memfilter data yang harganya sesuai (atau fallback ke L jika kosong)
         renderList(allRestos.filter(i => (i.price || 'L') === val));
     } else {
         renderList(allRestos.filter(i => i.category === val));
